@@ -202,7 +202,7 @@ const calculateTotalAmount = (items: Item[]): number =>
   }, 0);
 
 const addCommasToNumber = (number: number | string): string => {
-  let numberString = number.toString();
+  let numberString = Number(number).toFixed(2);
   const parts = numberString.split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return parts.join(".");
