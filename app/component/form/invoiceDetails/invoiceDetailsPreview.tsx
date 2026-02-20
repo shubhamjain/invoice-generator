@@ -67,11 +67,11 @@ export const InvoiceDetailsPreview: React.FC<
               {qty || "-"}
             </p>
             <p className="flex truncate text-xs font-medium text-gray-600">
-              {amount ? addCommasToNumber(amount) : ""}
+              {amount ? addCommasToNumber(+amount) : ""}
             </p>
             <p className="flex items-end w-full text-xs font-medium text-gray-600 text-right justify-end">
               {currencyDetails?.currencySymbol}
-              {amount ? addCommasToNumber((qty ? qty : 1) * amount) : ""}
+              {amount ? addCommasToNumber((qty ? +qty : 1) * +amount) : ""}
             </p>
           </div>
         </div>
@@ -96,7 +96,7 @@ export const InvoiceDetailsPreview: React.FC<
             </p>
             <p className="flex truncate text-xs font-medium text-gray-600">
               {currencyDetails?.currencySymbol}
-              {addCommasToNumber(subtotal)}
+              {addCommasToNumber(subtotal.toFixed(2))}
             </p>
           </div>
           {discount && (
@@ -117,7 +117,7 @@ export const InvoiceDetailsPreview: React.FC<
               </p>
               <p className="flex truncate text-xs font-medium text-gray-600">
                 {currencyDetails?.currencySymbol}
-                {addCommasToNumber(+taxAmount.toFixed(2))}
+                {addCommasToNumber(taxAmount.toFixed(2))}
               </p>
             </div>
           )}
@@ -129,7 +129,7 @@ export const InvoiceDetailsPreview: React.FC<
             </div>
             <p className="flex truncate text-md font-medium">
               {currencyDetails?.currencySymbol}
-              {addCommasToNumber(totalAmount)}
+              {addCommasToNumber(totalAmount.toFixed(2))}
             </p>
           </div>
         </div>
@@ -145,7 +145,7 @@ const calculateTotalAmount = (items: Item[]): number =>
     return total + quantity * amount;
   }, 0);
 
-const addCommasToNumber = (number: number): string => {
+const addCommasToNumber = (number: number | string): string => {
   let numberString = number.toString();
   const parts = numberString.split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");

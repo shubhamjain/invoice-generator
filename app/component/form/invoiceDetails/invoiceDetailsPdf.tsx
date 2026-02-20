@@ -75,7 +75,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
                 {qty ? qty : "-"}
               </Text>
               <Text style={{ flex: 1, ...pdfTypography.itemDescription }}>
-                {amount ? addCommasToNumber(amount) : ""}
+                {amount ? addCommasToNumber(+amount) : ""}
               </Text>
               <Text
                 style={{
@@ -85,7 +85,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
                 }}
               >
                 {currencyDetails?.currencySymbol}
-                {amount ? addCommasToNumber((qty ? qty : 1) * amount) : ""}
+                {amount ? addCommasToNumber((qty ? +qty : 1) * +amount) : ""}
               </Text>
             </View>
           </View>
@@ -120,7 +120,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
               }}
             >
               {currencyDetails?.currencySymbol}
-              {addCommasToNumber(subtotal)}
+              {addCommasToNumber(subtotal.toFixed(2))}
             </Text>
           </View>
           {discount && (
@@ -167,7 +167,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
                 }}
               >
                 {currencyDetails?.currencySymbol}
-                {addCommasToNumber(+taxAmount.toFixed(2))}
+                {addCommasToNumber(taxAmount.toFixed(2))}
               </Text>
             </View>
           )}
@@ -185,7 +185,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
               style={{ ...pdfTypography.amount, textAlign: "right", flex: 1 }}
             >
               {currencyDetails?.currencySymbol}
-              {addCommasToNumber(totalAmount)}
+              {addCommasToNumber(totalAmount.toFixed(2))}
             </Text>
           </View>
         </View>
@@ -201,7 +201,7 @@ const calculateTotalAmount = (items: Item[]): number =>
     return total + quantity * amount;
   }, 0);
 
-const addCommasToNumber = (number: number): string => {
+const addCommasToNumber = (number: number | string): string => {
   let numberString = number.toString();
   const parts = numberString.split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");

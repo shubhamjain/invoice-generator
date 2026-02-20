@@ -90,7 +90,7 @@ export const InvoiceDetailsForm = () => {
                             updatedArray[index] = {
                               itemDescription,
                               amount,
-                              qty: +inputValue,
+                              qty: inputValue,
                             };
                             localStorage.setItem(
                               "items",
@@ -116,7 +116,7 @@ export const InvoiceDetailsForm = () => {
                             const updatedArray = [...value];
                             updatedArray[index] = {
                               itemDescription,
-                              amount: +inputValue,
+                              amount: inputValue,
                               qty,
                             };
                             localStorage.setItem(
