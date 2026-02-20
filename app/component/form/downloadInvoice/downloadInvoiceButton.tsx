@@ -76,7 +76,13 @@ export const DownloadInvoiceButton = () => {
                     </Page>
                   </Document>
                 ).toBlob();
-                saveAs(blob, "invoice.pdf");
+                const now = new Date();
+                const month = now
+                  .toLocaleString("en-US", { month: "short" })
+                  .toLowerCase();
+                const day = String(now.getDate()).padStart(2, "0");
+                const year = now.getFullYear();
+                saveAs(blob, `invoice-${month}-${day}-${year}.pdf`);
                 setStatus("downloaded");
               } else {
                 setStatus("not-downloaded");
